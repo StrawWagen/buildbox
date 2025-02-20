@@ -179,10 +179,8 @@ else
 
 			if not should then
 				ent:AddPreventTransmitReason( ply, BUILDBOX_REASON )
-
 			else
 				ent:RemovePreventTransmitReason( ply, BUILDBOX_REASON )
-
 			end
 
 			if claim != nil then
