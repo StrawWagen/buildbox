@@ -16,6 +16,9 @@ ENT.ClassBlacklist = {
 	["starfall_cnextbot"] = true
 }
 
+-- requires https://github.com/StrawWagen/gm_better_preventransmit
+local BUILDBOX_REASON = "cfc_buildbox"
+
 function ENT:Initialize()
 	self:SetModel("models/hunter/blocks/cube05x05x05.mdl")
 
@@ -174,7 +177,13 @@ else
 				return
 			end
 
-			ent:SetPreventTransmit(ply, not should)
+			if not should then
+				ent:AddPreventTransmitReason( ply, BUILDBOX_REASON )
+
+			else
+				ent:RemovePreventTransmitReason( ply, BUILDBOX_REASON )
+
+			end
 
 			if claim != nil then
 				ent.BuildBox = claim and self or nil
@@ -295,7 +304,7 @@ if SERVER then
 
 			for _, ent in ents.Iterator() do
 				if ent.BuildBox then
-					ent:SetPreventTransmit(ply, true)
+					ent:AddPreventTransmitReason( ply, BUILDBOX_REASON )
 				end
 			end
 		end)
